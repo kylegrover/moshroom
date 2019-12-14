@@ -11,8 +11,8 @@ let mainWindow
 
 // ipcMain.on('')
 
-// production mode
-process.env.NODE_ENV = 'production'
+// production mode - uncomment and run `npm package-win` etc to build
+// process.env.NODE_ENV = 'production'
 
 app.on('ready',()=>{
     mainWindow = new BrowserWindow({
@@ -46,21 +46,21 @@ const mainMenuTemplate = [
         submenu: [
             {
                 label: 'Import Video',
-                accelerator: process.platform == 'darwin'?'Command+O':'Ctrl+O',
+                accelerator: 'CmdOrCtrl+O',
                 click(){
                     chooseVideo();
                 }
             },
             {
                 label: 'Export Video',
-                accelerator: process.platform == 'darwin'?'Command+S':'Ctrl+S',
+                accelerator: 'CmdOrCtrl+S',
                 click(){
                     // mosh/bake/save
                 }
             },
             {
                 label: 'Quit',
-                accelerator: process.platform == 'darwin'?'Command+Q':'Ctrl+Q',
+                accelerator: 'CmdOrCtrl+Q',
                 click(){
                     app.quit()
                 }
