@@ -1,5 +1,36 @@
 h1 {
     display: inline-block;
-    transform: rotate(-20deg) translate(-8px, -20px);
+    transform: rotate(-30deg) translate(-50px, -35px);
     font-size: 22px;
+    -webkit-app-region: drag;
+    cursor: -webkit-grab;
+    background: #fffd;
+    padding: 2px 50px;
+}
+body {
+    border: 1px solid #0005;
+    box-sizing: border-box;
+    background: #0001;
+    background: linear-gradient(45deg, transparent 67%, black 67%);
+    background-size: 3px 3px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#glcontext {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#� {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: black;
+    text-decoration: none;
+    z-index: 999;
+    cursor: pointer;
 }

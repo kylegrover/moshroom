@@ -5,12 +5,23 @@ const fs = require('fs')
 
 const exec = require('child_process').exec
 
-const {app, BrowserWindow, Menu, dialog, shell} = electron
+const {app, Menu, BrowserWindow, shell, ipcMain, dialog } = electron
 
 let mainWindow
 
+// ipcMain.on('')
+
+// production mode
+process.env.NODE_ENV = 'production'
+
 app.on('ready',()=>{
-    mainWindow = new BrowserWindow({})
+    mainWindow = new BrowserWindow({
+        frame: false,
+        transparent: true,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    })
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'main.html'),
         protocol: 'file:',
@@ -23,6 +34,12 @@ app.on('ready',()=>{
     Menu.setApplicationMenu(mainMenu)
 })
 
+ipcMain.on('chooseVideo',(e)=>{
+    // mainWindow.webContents.send('')
+    // console.log('boop')
+    chooseVideo()
+})
+
 const mainMenuTemplate = [
     {
         label:'File',
@@ -31,15 +48,7 @@ const mainMenuTemplate = [
                 label: 'Import Video',
                 accelerator: process.platform == 'darwin'?'Command+O':'Ctrl+O',
                 click(){
-                    // file picker
-                    dialog.showOpenDialog(mainWindow, {
-                        properties: ['openFile']
-                    }).then(result => {
-                        console.log(result.filePaths)
-                        loadVideo(result.filePaths[0])
-                    }).catch(err => {
-                        console.log(err)
-                    })
+                    chooseVideo();
                 }
             },
             {
@@ -77,6 +86,22 @@ if (process.env.NODE_ENV != 'production') mainMenuTemplate.push({
     ]
 });
 
+// mainWindow.querySelector('#openvidbtn').addEventListener('click',()=>{
+//     chooseVideo();
+// })
+function chooseVideo() {
+    // file picker
+    dialog.showOpenDialog(mainWindow, {
+        properties: ['openFile']
+    }).then(result => {
+        console.log(result.filePaths)
+        if (result.filePaths.length > 0) 
+            loadVideo(result.filePaths[0])
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
 function loadVideo(filepath) {
     // fs.readFile(filepath, 'utf-8', (err,data) => {
     //     if (err) {
@@ -87,20 +112,18 @@ function loadVideo(filepath) {
         // do something with data
         // console.log(data)
     // })
-    // shell.showItemInFolder(filepath)
 
     var date = new Date
     var date_string = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'-'+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds()
-    var output_file = 'output/'+date_string+'.mp4'
-    exec('ffmpeg -i '+filepath+' '+output_file, (err, stdout, stderr) => { 
-        if (err != null) { 
-            console.log(err)
-        } else if (stderr != null) {
-            console.log(stderr)
-        } else {
-            console.log('success!')
-            console.log(stdout)
-            shell.showItemInFolder(output_file)
-        }
-    });
+    var output_file = 'output\\'+date_string+'.mp4'
+    var mosh_process = exec('bash\\mosh.bat "'+filepath+'" "'+output_file+'"');
+    mainWindow.setProgressBar(2) // indeterminate mode. maybe use ffprobe in the future to set real values
+    mosh_process.stdout.pipe(process.stdout);
+    mosh_process.on('exit',()=>{
+        console.log("mosh complete");
+        console.log(__dirname)
+        console.log(output_file)
+        shell.showItemInFolder(__dirname+'\\'+output_file)
+    })
+    mainWindow.setProgressBar(-1) // done
 }

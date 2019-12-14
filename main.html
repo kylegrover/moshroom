@@ -3,11 +3,26 @@
 <head>
     <title>Document</title>
     <link href="style.css" rel="stylesheet">
+    <!-- <script src="https://cdn.babylonjs.com/babylon.js"></script> -->
+    <!-- <script src="https://cdn.babylonjs.com/cannon.js"></script> -->
+    <!-- <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script> -->
 </head>
 <body>
+    <a href="https://ufffd.com/" target="_blank" id="�">�'s</a>
     <h1 class="marquee">
-            <span>m҉o҉s҉h҉r҉o҉o҉m҉</span>
-        </h1>
+        <span>m҉o҉s҉h҉r҉o҉o҉m҉</span>
+    </h1>
+    <button id="choosevideobtn">Choose Video</button>
+    <!-- <canvas id="glcontext" touch-action="none"></canvas> -->
+    <!-- <script src="3d.js"></script> -->
+    <script>
+        const electron = require('electron')
+        const {ipcRenderer} = electron
 
+        const import_btn = document.querySelector('#choosevideobtn')
+        import_btn.addEventListener('click',(e)=>{
+            ipcRenderer.send('chooseVideo',{});
+        })
+    </script>
 </body>
 </html>
