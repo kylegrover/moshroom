@@ -1,3 +1,6 @@
 node_modules
 output/*
 tests
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe
