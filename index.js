@@ -128,10 +128,10 @@ function loadVideo(filepath) {
                 var bake_file = exec('moshy', ['-m bake -i',output_file+'-moshed.avi','-o',output_file+'-baked.avi'])
                 bake_file.on('exit',(code)=>{
                     console.log('bake_file code '+code)
-                    var save_to_mp4 = spawn(ffmpeg.pathname, ['-i',output_file+'-baked.avi','-vcodec libxvid -qscale 1 -g 60 -me_method epzs -bf 0 -mbd 0 -acodec copy',output_file+'-baked.avi'], { shell: true })
+                    var save_to_mp4 = spawn(ffmpeg.pathname, ['-i',output_file+'-baked.avi','-vcodec libxvid -qscale 1 -g 60 -me_method epzs -bf 0 -mbd 0 -acodec copy',output_file], { shell: true })
                     save_to_mp4.on('exit',(code)=>{
                         console.log('save_to_mp4 code '+code)
-                        var clean_up = spawn(ffmpeg.pathname, ['-m bake -i',filepath,'-strict -2 ',output_file], { shell: true })
+                        var clean_up = spawn('rm',$output_file+'-nokeys.avi',$output_file+'-moshed.avi',$output_file+'-baked.avi')
                         clean_up.on('exit',(code)=>{
                             console.log('clean_up code '+code)
                             console.log("mosh complete")
