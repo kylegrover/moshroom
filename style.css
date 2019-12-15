@@ -34,3 +34,37 @@ body {
     z-index: 999;
     cursor: pointer;
 }
+
+.btn {
+    display: inline-block;
+    border-radius: 3px;
+}
+
+.btn.box-btn {
+    min-width: 150px;
+    min-height: 50px;
+    background: white;
+    border: 1px solid black;
+    box-shadow: 2px 2px, 4px 4px;
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: 0.3s ease-out top, 0.3s ease-out left, 0.3s ease-out box-shadow;
+    font-weight: 600;
+    font-size: 1.1em;
+    line-height: 0;
+    padding: 10px;
+}
+
+.btn.box-btn:hover {
+    box-shadow: 1.5px 1.5px, 1.5px 1.5px;
+    top: 1px;
+    left: 1px;
+    transition: 0.5s ease-out top, 0.5s ease-out left, 0.5s ease-out box-shadow;
+}
+
+.btn.box-btn:active {
+    box-shadow: 0px 0px, 0px 0px;
+    top: 4px;
+    left: 4px;
+}
