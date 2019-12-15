@@ -29,8 +29,12 @@ let mainWindow
 
 app.on('ready',()=>{
     mainWindow = new BrowserWindow({
+        width: 900,
+        height: 900,
+        resizable: false,
         frame: false,
         transparent: true,
+        clickThrough: 'pointer-events',
         webPreferences: {
             nodeIntegration: true
         }

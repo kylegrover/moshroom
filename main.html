@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Document</title>
     <link href="style.css" rel="stylesheet">
@@ -7,22 +8,75 @@
     <!-- <script src="https://cdn.babylonjs.com/cannon.js"></script> -->
     <!-- <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script> -->
 </head>
+
 <body>
-    <a href="https://ufffd.com/" target="_blank" id="�">�'s</a>
-    <h1 class="marquee">
-        <span>m҉o҉s҉h҉r҉o҉o҉m҉</span>
-    </h1>
-    <button id="choosevideobtn" class="btn box-btn">Basic Mosh...</button>
-    <!-- <canvas id="glcontext" touch-action="none"></canvas> -->
-    <!-- <script src="3d.js"></script> -->
+    <div class="box-wrapper">
+        <div class="box-main">
+            <div class="box-face box-front">
+                <a href="https://ufffd.com/" target="_blank" id="�">�'s</a>
+                <h1 class="marquee">
+                    <span>m҉o҉s҉h҉r҉o҉o҉m҉</span>
+                </h1>
+                <button id="btn_basicmosh" class="btn box-btn">Basic Mosh...</button><br><br>
+                <button id="btn_animosh" class="btn box-btn">Animosh...</button>
+            </div>
+            <div class="box-face box-left">
+                left
+            </div>
+            <div class="box-face box-right">
+                <h3>Animosh Options</h3>
+                Image<br>
+            </div>
+            <div class="box-face box-back">
+                back
+            </div>
+            <div class="box-face box-top">
+                top
+            </div>
+            <div class="box-face box-bottom">
+                bottom
+            </div>
+        </div>
+    </div>
     <script>
         const electron = require('electron')
-        const {ipcRenderer} = electron
+        const {
+            ipcRenderer
+        } = electron
 
-        const import_btn = document.querySelector('#choosevideobtn')
-        import_btn.addEventListener('click',(e)=>{
-            ipcRenderer.send('chooseVideo',{});
+        const btn_basicmosh = document.querySelector('#btn_basicmosh')
+        btn_basicmosh.addEventListener('click', (e) => {
+            ipcRenderer.send('chooseVideo', {});
+        })
+
+        const btn_animosh = document.querySelector('#btn_animosh')
+        btn_animosh.addEventListener('click', (e) => {
+            changeSide('right')
+            ipcRenderer.send('animosh', {});
+        })
+
+        var boxmain = document.querySelector('.box-main');
+        var currentClass = '';
+
+        function changeSide(side) {
+            var showClass = 'show-' + side;
+            if (currentClass) {
+                boxmain.classList.remove(currentClass);
+            }
+            boxmain.classList.add(showClass);
+            currentClass = showClass;
+        }
+        // set initial side
+        changeSide('front');
+        
+
+        window.addEventListener('mousemove', event => {
+            if (event.target === document.documentElement) // <html>-element
+                setIgnoreMouseEvents(true, {forward: true})   // {forward: true} keeps generating MouseEvents
+            else
+                setIgnoreMouseEvents(false)
         })
     </script>
 </body>
+
 </html>

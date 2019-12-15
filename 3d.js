@@ -34,8 +34,10 @@ window.addEventListener("DOMContentLoaded", function () {
         // camera/player STUFF
         // create camera
         var camera = new BABYLON.UniversalCamera('view',
-            new BABYLON.Vector3(-10, 2.1, 10), scene);
-        camera.setTarget(BABYLON.Vector3.Zero());
+            new BABYLON.Vector3(0, 2.1, 10), scene);
+        // camera.setTarget(BABYLON.Vector3(0,0,0));
+        // Attach the camera to the canvas
+        camera.attachControl(canvas, true);
         
         // basic lighting
         var light1 = new BABYLON.PointLight('point1', new BABYLON.Vector3(6, 10, -8), scene);
@@ -77,7 +79,8 @@ window.addEventListener("DOMContentLoaded", function () {
                 }, scene);
             }
         }
-        // makeUfffdBoxes(16);
+        makeUfffdBoxes(186);
+
 
 
         // Enable Collisions
