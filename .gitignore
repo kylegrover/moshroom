@@ -4,3 +4,6 @@ tests
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe
+binaries/*
+*.mp4
+*.mov

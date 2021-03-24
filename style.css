@@ -11,16 +11,16 @@ h1 {
     position: absolute;
 }
 body {
-    border: 1px solid #0005;
-    box-sizing: border-box;
-    background: #0001;
-    background: linear-gradient(45deg, transparent 67%, #0005 67%);
-    background-size: 3px 3px;
     min-height: 100vh;
     margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid #0005; */
+    /* background: #0001; */
+    /* background: linear-gradient(45deg, transparent 67%, #0005 67%); */
+    /* background-size: 3px 3px; */
 }
 
-body {pointer-events: none}
+/* body {pointer-events: none} */
 
 #glcontext {
     position: absolute;
@@ -32,12 +32,14 @@ body {pointer-events: none}
 
 #� {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 3px;
+    left: 3px;
     color: black;
     text-decoration: none;
     z-index: 999;
     cursor: pointer;
+    padding: 0;
+    line-height: 1;
 }
 
 .btn {
@@ -84,6 +86,7 @@ body {pointer-events: none}
     height: 500px;
     width: 500px;
     perspective: 800px;
+    transition: perspective 1s;
 }
 .box-main {
     width: 500px;
@@ -91,7 +94,21 @@ body {pointer-events: none}
     position: relative;
     transform-style: preserve-3d;
     transform: translateZ(-100px);
-    transition: transform 1s;
+    transition: transform 1s, opacity 1s;
+    opacity: 1;
+}
+.box-main.box-main-loading {
+    transform: translateZ(-100px) rotate(12deg) translateZ(-5000px) rotate3d(4,3,2,600deg);
+}
+body.quitting .box-main {
+    transform: translateZ(-200px) rotate3d(4,3,2,300deg);
+    opacity: 0;
+}
+body.quitting .box-wrapper {
+    perspective: 40px;
+}
+body.quitting {
+    overflow: hidden;
 }
 .box-main.show-front  { transform: translateZ(-100px) rotateY(   0deg); }
 .box-main.show-right  { transform: translateZ(-100px) rotateY( -90deg); }
@@ -109,6 +126,18 @@ body {pointer-events: none}
     align-items: center;
     border: 1px solid #0005;
     background: #fffa;
+
+    /* -webkit-app-region: drag; */
+    /* cursor: -webkit-grab; */
+}
+.box-main .box-face input,
+.box-main .box-face button,
+.box-main .box-face a,
+.box-main .box-face textarea,
+.box-main .box-face select,
+.box-main .box-face .btn {    
+    -webkit-app-region: initial;
+    cursor: initial;
 }
 .box-front {
     overflow: hidden;
@@ -121,3 +150,14 @@ body {pointer-events: none}
 .box-left   { transform: rotateY(-90deg) translateZ(250px); }
 .box-top    { transform: rotateX( 90deg) translateZ(250px); }
 .box-bottom { transform: rotateX(-90deg) translateZ(250px); }
+
+
+.box-nav {
+    position: absolute;
+    font-size: 3em;
+    background: none;
+    border: none;
+}
+.box-nav-left {
+    left: 20px;
+}

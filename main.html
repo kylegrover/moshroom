@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Document</title>
+    <title>m҉o҉s҉h҉r҉o҉o҉m҉ by �</title>
     <link href="style.css" rel="stylesheet">
     <!-- <script src="https://cdn.babylonjs.com/babylon.js"></script> -->
     <!-- <script src="https://cdn.babylonjs.com/cannon.js"></script> -->
@@ -11,19 +11,22 @@
 
 <body>
     <div class="box-wrapper">
-        <div class="box-main">
+        <div class="box-main box-main-loading">
             <div class="box-face box-front">
                 <a href="https://ufffd.com/" target="_blank" id="�">�'s</a>
                 <h1 class="marquee">
                     <span>m҉o҉s҉h҉r҉o҉o҉m҉</span>
                 </h1>
                 <button id="btn_basicmosh" class="btn box-btn">Basic Mosh...</button><br><br>
+                <button id="btn_loopmosh" class="btn box-btn">Loop Mosh...</button><br><br>
                 <button id="btn_animosh" class="btn box-btn">Animosh...</button>
             </div>
             <div class="box-face box-left">
+                <button class="box-nav box-nav-right" onclick="changeSide('front')">🖙</button>
                 left
             </div>
             <div class="box-face box-right">
+                <button class="box-nav box-nav-left" onclick="changeSide('front')">🖘</button>
                 <h3>Animosh Options</h3>
                 Image<br>
             </div>
@@ -31,51 +34,61 @@
                 back
             </div>
             <div class="box-face box-top">
+                <button class="box-nav box-nav-down" onclick="changeSide('front')">🖟</button>
                 top
             </div>
             <div class="box-face box-bottom">
+                <button class="box-nav box-nav-up" onclick="changeSide('front')">🖞</button>
                 bottom
             </div>
         </div>
     </div>
     <script>
         const electron = require('electron')
-        const {
-            ipcRenderer
-        } = electron
+        const { ipcRenderer } = electron
 
         const btn_basicmosh = document.querySelector('#btn_basicmosh')
         btn_basicmosh.addEventListener('click', (e) => {
-            ipcRenderer.send('chooseVideo', {});
+            ipcRenderer.send('basicMosh', {})
+        })
+
+        const btn_loopmosh = document.querySelector('#btn_loopmosh')
+        btn_loopmosh.addEventListener('click', (e) => {
+            ipcRenderer.send('loopMosh', {})
         })
 
         const btn_animosh = document.querySelector('#btn_animosh')
         btn_animosh.addEventListener('click', (e) => {
             changeSide('right')
-            ipcRenderer.send('animosh', {});
+            ipcRenderer.send('aniMosh', {})
         })
 
-        var boxmain = document.querySelector('.box-main');
-        var currentClass = '';
+        var boxmain = document.querySelector('.box-main')
+        var currentClass = ''
 
         function changeSide(side) {
-            var showClass = 'show-' + side;
+            var showClass = 'show-' + side
             if (currentClass) {
-                boxmain.classList.remove(currentClass);
+                boxmain.classList.remove(currentClass)
             }
-            boxmain.classList.add(showClass);
-            currentClass = showClass;
+            boxmain.classList.add(showClass)
+            currentClass = showClass
         }
         // set initial side
-        changeSide('front');
+        // changeSide('front')
         
 
+        // attempting to make transparent parts click-through
         window.addEventListener('mousemove', event => {
-            if (event.target === document.documentElement) // <html>-element
-                setIgnoreMouseEvents(true, {forward: true})   // {forward: true} keeps generating MouseEvents
+            // console.log(event.target)
+            if (event.target.tagName == 'BODY') 
+                ipcRenderer.send('ignoremouse_true', {})
             else
-                setIgnoreMouseEvents(false)
+                ipcRenderer.send('ignoremouse_false', {})
         })
+        setTimeout(()=>{
+            document.querySelector('.box-main-loading').classList.remove('box-main-loading')
+        }, 200)
     </script>
 </body>
 
