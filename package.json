@@ -4,7 +4,7 @@
   "description": "Datamosh GUI built in Electron",
   "main": "index.js",
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.2",
     "electron": "^7.1.5",
     "python-shell": "^1.0.8"
   },
