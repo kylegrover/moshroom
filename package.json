@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "async": "^3.1.0",
-    "electron": "^7.1.5",
+    "electron": "^18.3.7",
     "python-shell": "^1.0.8"
   },
   "devDependencies": {
